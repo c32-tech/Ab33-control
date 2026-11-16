@@ -6,91 +6,103 @@
   <title>Control Material Menor - Móvil AB-33</title>
   <style>
     :root {
-      --primary: #d9232e;
-      --secondary: #0077b6;
-      --accent: #facc15;
-      --dark: #1e293b;
-      --bg: #f1f5f9;
+      --celeste-principal: #0ea5e9;
+      --celeste-oscuro: #0369a1;
+      --celeste-medio: #38bdf8;
+      --celeste-suave: #e0f2fe;
+      --celeste-fondo: #f0f9ff;
+      --accent-amarillo: #facc15;
+      --dark: #0f172a;
       --card: #ffffff;
-      --border: #cbd5e1;
+      --border: #bae6fd;
       --si-color: #16a34a;
       --no-color: #dc2626;
       --na-color: #64748b;
     }
 
     * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: var(--bg); color: var(--dark); margin: 0; padding: 16px; }
+    body { background-color: var(--celeste-fondo); color: var(--dark); margin: 0; padding: 16px; }
     .container { max-width: 900px; margin: 0 auto; }
 
     /* Header */
     .header {
-      background: var(--card);
-      border-top: 6px solid var(--accent);
-      border-bottom: 4px solid var(--secondary);
-      border-radius: 10px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--celeste-suave) 100%);
+      border-top: 6px solid var(--celeste-principal);
+      border-bottom: 4px solid var(--accent-amarillo);
+      border-radius: 12px;
       padding: 20px;
       display: flex;
       align-items: center;
       gap: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.12);
       margin-bottom: 20px;
     }
     .header img { width: 85px; height: auto; object-fit: contain; }
-    .header-text h1 { margin: 0; font-size: 1.25rem; color: var(--dark); text-transform: uppercase; }
-    .header-text h2 { margin: 4px 0; font-size: 1rem; color: var(--secondary); }
+    .header-text h1 { margin: 0; font-size: 1.25rem; color: var(--celeste-oscuro); text-transform: uppercase; }
+    .header-text h2 { margin: 4px 0; font-size: 1rem; color: #0284c7; }
     .header-text .badge {
       display: inline-block;
-      background: var(--dark);
-      color: var(--accent);
+      background: var(--celeste-oscuro);
+      color: #ffffff;
       font-weight: bold;
-      padding: 4px 10px;
-      border-radius: 5px;
+      padding: 5px 12px;
+      border-radius: 6px;
       font-size: 0.9rem;
-      margin-top: 4px;
+      margin-top: 6px;
+      border-left: 4px solid var(--accent-amarillo);
     }
 
     /* Datos de Guardia */
     .meta-card {
       background: var(--card);
       padding: 18px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
       margin-bottom: 20px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
     }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--celeste-oscuro); }
     .form-group select, .form-group input[type="text"], .form-group input[type="date"] {
       width: 100%;
       padding: 10px;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 1rem;
+      background-color: #f8fafc;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group select:focus, .form-group input:focus, .obs-card textarea:focus {
+      outline: none;
+      border-color: var(--celeste-principal);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
+      background-color: #ffffff;
     }
 
     /* Secciones del Checklist */
     .section-card {
       background: var(--card);
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
       margin-bottom: 18px;
       overflow: hidden;
     }
     .section-header {
-      background: var(--dark);
-      color: #fff;
+      background: linear-gradient(90deg, var(--celeste-oscuro) 0%, var(--celeste-principal) 100%);
+      color: #ffffff;
       padding: 12px 16px;
       font-weight: bold;
       font-size: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
     }
     .section-header span.count {
-      background: rgba(255,255,255,0.2);
-      padding: 2px 8px;
+      background: rgba(255, 255, 255, 0.22);
+      padding: 2px 10px;
       border-radius: 12px;
       font-size: 0.8rem;
     }
@@ -101,11 +113,17 @@
       align-items: center;
       gap: 10px;
       padding: 10px 16px;
-      border-bottom: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e0f2fe;
+      transition: background-color 0.2s;
     }
     .item-row:last-child { border-bottom: none; }
-    .item-row:nth-child(even) { background-color: #f8fafc; }
-    .item-name { font-size: 0.95rem; font-weight: 500; }
+    .item-row:nth-child(even) { background-color: #f4faff; }
+    .item-row.row-error {
+      background-color: #fef2f2 !important;
+      outline: 2px solid var(--no-color);
+      outline-offset: -2px;
+    }
+    .item-name { font-size: 0.95rem; font-weight: 500; color: #1e293b; }
 
     /* Radio Buttons tipo Botón */
     .radio-group { display: flex; gap: 6px; }
@@ -113,14 +131,21 @@
       cursor: pointer;
       padding: 6px 12px;
       border: 1px solid var(--border);
+      background: #ffffff;
       border-radius: 6px;
       font-size: 0.85rem;
       font-weight: bold;
       user-select: none;
       transition: all 0.15s;
+      color: var(--celeste-oscuro);
     }
-    .radio-group input { display: none; }
-    .radio-group input[value="SI"]:checked + span { color: #fff; }
+    /* Se oculta visualmente pero sigue permitiendo el foco nativo de validación */
+    .radio-group input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
     .radio-group label:has(input[value="SI"]:checked) { background: var(--si-color); border-color: var(--si-color); color: #fff; }
     .radio-group label:has(input[value="NO"]:checked) { background: var(--no-color); border-color: var(--no-color); color: #fff; }
     .radio-group label:has(input[value="N/A"]:checked) { background: var(--na-color); border-color: var(--na-color); color: #fff; }
@@ -131,14 +156,16 @@
       border: 1px solid var(--border);
       border-radius: 6px;
       font-size: 0.88rem;
+      background: #ffffff;
     }
 
     /* Observaciones */
     .obs-card {
       background: var(--card);
       padding: 18px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
       margin-bottom: 24px;
     }
     .obs-card textarea {
@@ -146,36 +173,30 @@
       min-height: 110px;
       padding: 12px;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 0.95rem;
       resize: vertical;
+      background-color: #f8fafc;
     }
 
-    /* Botones */
+    /* Botón Enviar */
     .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
     .btn-submit {
       flex: 1;
-      background: var(--si-color);
+      background: linear-gradient(135deg, var(--celeste-principal) 0%, var(--celeste-oscuro) 100%);
       color: #fff;
       border: none;
-      padding: 14px 24px;
+      padding: 15px 24px;
       font-size: 1.05rem;
       font-weight: bold;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      box-shadow: 0 4px 6px rgba(22, 163, 74, 0.25);
+      box-shadow: 0 4px 12px rgba(3, 105, 161, 0.25);
+      transition: transform 0.1s, opacity 0.2s;
     }
-    .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
-    .btn-fill-si {
-      background: var(--secondary);
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+    .btn-submit:hover { opacity: 0.95; }
+    .btn-submit:active { transform: scale(0.99); }
+    .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; box-shadow: none; }
 
     /* Responsive móvil */
     @media (max-width: 680px) {
@@ -198,7 +219,7 @@
     </div>
   </div>
 
-  <form id="checklistForm">
+  <form id="checklistForm" novalidate>
     <!-- Datos de Guardia y Encargado -->
     <div class="meta-card">
       <div class="form-group">
@@ -220,10 +241,6 @@
         <label for="fecha">Fecha *</label>
         <input type="date" id="fecha" required>
       </div>
-    </div>
-
-    <div style="margin-bottom: 14px; text-align: right;">
-      <button type="button" class="btn-fill-si" onclick="marcarTodosSi()">Marcar todos como "SI"</button>
     </div>
 
     <!-- Contenedor dinámico del Checklist -->
@@ -473,14 +490,20 @@
       row.dataset.nombre = itemName;
 
       row.innerHTML = `
-        <div class="item-name">${itemName}</div>
+        <div class="item-name">${itemName} *</div>
         <div class="radio-group">
           <label><input type="radio" name="chk_${idx}" value="SI" required><span>SI</span></label>
-          <label><input type="radio" name="chk_${idx}" value="NO"><span>NO</span></label>
-          <label><input type="radio" name="chk_${idx}" value="N/A"><span>N/A</span></label>
+          <label><input type="radio" name="chk_${idx}" value="NO" required><span>NO</span></label>
+          <label><input type="radio" name="chk_${idx}" value="N/A" required><span>N/A</span></label>
         </div>
         <input type="text" class="estado-input" placeholder="Estado / Detalle...">
       `;
+
+      // Quitar alerta visual en cuanto el usuario seleccione una opción
+      row.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', () => row.classList.remove('row-error'));
+      });
+
       body.appendChild(row);
     });
 
@@ -488,16 +511,55 @@
     container.appendChild(card);
   });
 
-  // Función auxiliar para agilizar carga marcando todos como SI
-  function marcarTodosSi() {
-    document.querySelectorAll('input[type="radio"][value="SI"]').forEach(r => r.checked = true);
-  }
-
-  // Envío del formulario
+  // Validación y envío del formulario
   document.getElementById('checklistForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    if (SCRIPT_URL === "https://script.google.com/macros/s/AKfycbzc4POaZHhoX8HHcDm_BiuBp1R3WfvXot7sH22Xgx-me7Osvzm7BlG1gapJ1mfVpQkK/exec") {
+    // 1. Validar campos superiores (Guardia, Encargado, Fecha)
+    const guardiaEl = document.getElementById('guardia');
+    const encargadoEl = document.getElementById('encargado');
+    const fechaEl = document.getElementById('fecha');
+
+    if (!guardiaEl.value) {
+      alert("Por favor, seleccione el número de Guardia.");
+      guardiaEl.focus();
+      return;
+    }
+    if (!encargadoEl.value.trim()) {
+      alert("Por favor, ingrese el nombre del Encargado de Control de Móviles.");
+      encargadoEl.focus();
+      return;
+    }
+    if (!fechaEl.value) {
+      alert("Por favor, seleccione la Fecha del control.");
+      fechaEl.focus();
+      return;
+    }
+
+    // 2. Validar que TODAS las casillas del checklist estén marcadas
+    const allRows = document.querySelectorAll('.item-row');
+    let firstMissingRow = null;
+    let missingCount = 0;
+
+    allRows.forEach(row => {
+      row.classList.remove('row-error');
+      const checkedRadio = row.querySelector('input[type="radio"]:checked');
+      if (!checkedRadio) {
+        row.classList.add('row-error');
+        missingCount++;
+        if (!firstMissingRow) {
+          firstMissingRow = row;
+        }
+      }
+    });
+
+    if (firstMissingRow) {
+      firstMissingRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      alert(`Faltan marcar ${missingCount} casilla(s) obligatoria(s). Complete todos los ítems resaltados en rojo antes de guardar.`);
+      return;
+    }
+
+    if (SCRIPT_URL === "AKfycbwQU9H1RYiWdR9MjTJVvWUSEhY5rfEAb0_NthbjfDZ3WUYgKxacXXy7BS25JexfEDdk") {
       alert("Error: Debes configurar la variable SCRIPT_URL con la URL de tu Google Apps Script.");
       return;
     }
@@ -507,21 +569,21 @@
     btn.textContent = "Guardando y enviando...";
 
     const itemsData = [];
-    document.querySelectorAll('.item-row').forEach(row => {
+    allRows.forEach(row => {
       const checkedRadio = row.querySelector('input[type="radio"]:checked');
       const estadoVal = row.querySelector('.estado-input').value.trim();
       itemsData.push({
         seccion: row.dataset.seccion,
         nombre: row.dataset.nombre,
-        valor: checkedRadio ? checkedRadio.value : "",
+        valor: checkedRadio.value,
         estado: estadoVal
       });
     });
 
     const payload = {
-      guardia: document.getElementById('guardia').value,
-      encargado: document.getElementById('encargado').value.trim(),
-      fecha: document.getElementById('fecha').value,
+      guardia: guardiaEl.value,
+      encargado: encargadoEl.value.trim(),
+      fecha: fechaEl.value,
       observaciones: document.getElementById('observaciones').value.trim(),
       items: itemsData
     };
@@ -529,7 +591,7 @@
     try {
       await fetch(SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors", // Evita bloqueos CORS con Google Apps Script
+        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
