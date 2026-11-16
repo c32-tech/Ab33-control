@@ -139,7 +139,6 @@
       transition: all 0.15s;
       color: var(--celeste-oscuro);
     }
-    /* Se oculta visualmente pero sigue permitiendo el foco nativo de validación */
     .radio-group input {
       position: absolute;
       opacity: 0;
@@ -499,7 +498,6 @@
         <input type="text" class="estado-input" placeholder="Estado / Detalle...">
       `;
 
-      // Quitar alerta visual en cuanto el usuario seleccione una opción
       row.querySelectorAll('input[type="radio"]').forEach(radio => {
         radio.addEventListener('change', () => row.classList.remove('row-error'));
       });
@@ -515,7 +513,6 @@
   document.getElementById('checklistForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // 1. Validar campos superiores (Guardia, Encargado, Fecha)
     const guardiaEl = document.getElementById('guardia');
     const encargadoEl = document.getElementById('encargado');
     const fechaEl = document.getElementById('fecha');
@@ -536,7 +533,6 @@
       return;
     }
 
-    // 2. Validar que TODAS las casillas del checklist estén marcadas
     const allRows = document.querySelectorAll('.item-row');
     let firstMissingRow = null;
     let missingCount = 0;
@@ -559,7 +555,7 @@
       return;
     }
 
-    if (SCRIPT_URL === "AKfycbwQU9H1RYiWdR9MjTJVvWUSEhY5rfEAb0_NthbjfDZ3WUYgKxacXXy7BS25JexfEDdk") {
+    if (SCRIPT_URL === "TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI") {
       alert("Error: Debes configurar la variable SCRIPT_URL con la URL de tu Google Apps Script.");
       return;
     }
