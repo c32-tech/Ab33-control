@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Material Menor - Móvil AB-33</title>
+  <style>
+    :root {
+      --primary: #d9232e;
+      --secondary: #0077b6;
+      --accent: #facc15;
+      --dark: #1e293b;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --border: #cbd5e1;
+      --si-color: #16a34a;
+      --no-color: #dc2626;
+      --na-color: #64748b;
+    }
+
+    * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--dark); margin: 0; padding: 16px; }
+    .container { max-width: 900px; margin: 0 auto; }
+
+    /* Header */
+    .header {
+      background: var(--card);
+      border-top: 6px solid var(--accent);
+      border-bottom: 4px solid var(--secondary);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+    .header img { width: 85px; height: auto; object-fit: contain; }
+    .header-text h1 { margin: 0; font-size: 1.25rem; color: var(--dark); text-transform: uppercase; }
+    .header-text h2 { margin: 4px 0; font-size: 1rem; color: var(--secondary); }
+    .header-text .badge {
+      display: inline-block;
+      background: var(--dark);
+      color: var(--accent);
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    /* Datos de Guardia */
+    .meta-card {
+      background: var(--card);
+      padding: 18px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+    .form-group select, .form-group input[type="text"], .form-group input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    /* Secciones del Checklist */
+    .section-card {
+      background: var(--card);
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+    .section-header {
+      background: var(--dark);
+      color: #fff;
+      padding: 12px 16px;
+      font-weight: bold;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .section-header span.count {
+      background: rgba(255,255,255,0.2);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: 2fr auto 1.2fr;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .item-row:last-child { border-bottom: none; }
+    .item-row:nth-child(even) { background-color: #f8fafc; }
+    .item-name { font-size: 0.95rem; font-weight: 500; }
+
+    /* Radio Buttons tipo Botón */
+    .radio-group { display: flex; gap: 6px; }
+    .radio-group label {
+      cursor: pointer;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .radio-group input { display: none; }
+    .radio-group input[value="SI"]:checked + span { color: #fff; }
+    .radio-group label:has(input[value="SI"]:checked) { background: var(--si-color); border-color: var(--si-color); color: #fff; }
+    .radio-group label:has(input[value="NO"]:checked) { background: var(--no-color); border-color: var(--no-color); color: #fff; }
+    .radio-group label:has(input[value="N/A"]:checked) { background: var(--na-color); border-color: var(--na-color); color: #fff; }
+
+    .estado-input {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.88rem;
+    }
+
+    /* Observaciones */
+    .obs-card {
+      background: var(--card);
+      padding: 18px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      margin-bottom: 24px;
+    }
+    .obs-card textarea {
+      width: 100%;
+      min-height: 110px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      resize: vertical;
+    }
+
+    /* Botones */
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+    .btn-submit {
+      flex: 1;
+      background: var(--si-color);
+      color: #fff;
+      border: none;
+      padding: 14px 24px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(22, 163, 74, 0.25);
+    }
+    .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+    .btn-fill-si {
+      background: var(--secondary);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Responsive móvil */
+    @media (max-width: 680px) {
+      .header { flex-direction: column; text-align: center; }
+      .item-row { grid-template-columns: 1fr; gap: 8px; }
+      .radio-group { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Encabezado -->
+  <div class="header">
+    <img src="logo.png" alt="Escudo Tercera Compañía Sajonia">
+    <div class="header-text">
+      <h1>Cuerpo de Bomberos Voluntarios del Paraguay</h1>
+      <h2>Tercera Compañía “Sajonia” - Incendio y Salvamento</h2>
+      <div class="badge">MÓVIL AB-33 • CONTROL DE MATERIAL MENOR</div>
+    </div>
+  </div>
+
+  <form id="checklistForm">
+    <!-- Datos de Guardia y Encargado -->
+    <div class="meta-card">
+      <div class="form-group">
+        <label for="guardia">Guardia N° *</label>
+        <select id="guardia" required>
+          <option value="" disabled selected>Seleccione Guardia...</option>
+          <option value="1">Guardia 1</option>
+          <option value="2">Guardia 2</option>
+          <option value="3">Guardia 3</option>
+          <option value="4">Guardia 4</option>
+          <option value="5">Guardia 5</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="encargado">Encargado de Control de Móviles *</label>
+        <input type="text" id="encargado" placeholder="Nombre y Apellido / Código" required>
+      </div>
+      <div class="form-group">
+        <label for="fecha">Fecha *</label>
+        <input type="date" id="fecha" required>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 14px; text-align: right;">
+      <button type="button" class="btn-fill-si" onclick="marcarTodosSi()">Marcar todos como "SI"</button>
+    </div>
+
+    <!-- Contenedor dinámico del Checklist -->
+    <div id="checklist-container"></div>
+
+    <!-- Observaciones / Daño -->
+    <div class="obs-card">
+      <div class="form-group">
+        <label for="observaciones">Observaciones / Daño:</label>
+        <textarea id="observaciones" placeholder="Ingrese aquí novedades, faltantes o daños detectados..."></textarea>
+      </div>
+    </div>
+
+    <!-- Botón Enviar -->
+    <div class="actions">
+      <button type="submit" class="btn-submit" id="btnSubmit">Guardar en Google Sheets y Enviar Reporte</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  // PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT IMPLEMENTADO
+  const SCRIPT_URL = "TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI";
+
+  // Estructura exacta de la Hoja 2 del PDF: CONTROL DE MATERIAL MENOR
+  const seccionesChecklist = [
+    {
+      titulo: "Cabina",
+      items: [
+        "6 Mochilas ERA",
+        "6 Mascaras con malla y forro",
+        "5 Cilindros ERA de reserva",
+        "1 Chaleco Kendrick",
+        "1 Férula para pierna",
+        "1 Férula para brazo",
+        "1 Férula para mano",
+        "1 Kit de RIT",
+        "1 Bolso con soga guía",
+        "1 Cuerda utilitaria",
+        "1 DEA",
+        "1 Araña",
+        "4 Batas",
+        "1 Extractor de fluidos",
+        "1 Cinta delimitadora",
+        "1 Manual GRE",
+        "1 Cámara Térmica"
+      ]
+    },
+    {
+      titulo: "Bolso de Rescate Vehicular",
+      items: [
+        "2 Saca válvula",
+        "1 Despanelizador",
+        "1 Cuchillo dentado",
+        "1 Rompevidrio tipo martillo",
+        "3 Llave combinada (10, 11 y 13)"
+      ]
+    },
+    {
+      titulo: "Kit de Salto",
+      items: [
+        "1 Collarín chico",
+        "1 Collarín mediano",
+        "1 Collarín grande",
+        "1 Saturómetro",
+        "1 Linterna pupilar",
+        "1 Termómetro digital",
+        "10 Tapaboca",
+        "10 Guantes de latex",
+        "10 Bajalengua",
+        "1 Kit de Triage",
+        "1 Esfigmomanómetro",
+        "1 Estetoscopio",
+        "1 Tijera de corte pesado",
+        "2 Esparadrapo",
+        "1 Dosificador con DG6",
+        "1 Botella de DG6",
+        "1 Solución IOP",
+        "1 Bolsa con apósitos",
+        "1 Bolsa de reanimación (lactante)",
+        "1 Bolsa de reanimación (pediatra)",
+        "1 Bolsa de reanimación (adulto)",
+        "10 Gasas",
+        "6 Vendas"
+      ]
+    },
+    {
+      titulo: "Persiana 1 lado conductor",
+      items: [
+        "4 Manga de 70 enrollada FR",
+        "4 Manga de 50 enrollada FR",
+        "1 Manga de 100 enrollada FR",
+        "1 Flotador de manguerote",
+        "1 Filtro de manguerote",
+        "1 Eductor",
+        "1 Tobera de baja expansión",
+        "1 Tobera de media expansión",
+        "2 Llave T",
+        "1 Propak"
+      ]
+    },
+    {
+      titulo: "Persiana 2 lado conductor",
+      items: [
+        "1 Manga de 70 con bifurca FR",
+        "1 Manga de 70 en fuelle FR",
+        "1 Manga de 50 en O con pitón FR",
+        "1 Manga de 50 en fuelle FR",
+        "1 Kit de entrada forzada",
+        "1 Pitón de 50 FR",
+        "1 Pitón de 70 FR",
+        "1 Bidón de espuma"
+      ]
+    },
+    {
+      titulo: "Cajonera 2 lado conductor",
+      items: [
+        "1 Trifurca FR",
+        "1 Bifurca FR",
+        "1 Pitón lanza",
+        "1 Pitón pantalla",
+        "1 Llave de cierre rápido 70 Storz",
+        "1 Colector de caudales",
+        "2 Adaptador FR a Storz 50",
+        "2 Adaptador Storz rosca gruesa 50",
+        "2 Adaptador Storz rosca gruesa 70",
+        "1 Adaptador Storz rosca fina 70",
+        "1 Reductor 70-50 FR",
+        "1 Reductor 70-50 Storz",
+        "5 Llave de manga Storz",
+        "2 Llave Darling",
+        "1 Llave de ascensor"
+      ]
+    },
+    {
+      titulo: "Parte superior del móvil",
+      items: [
+        "1 Escala doble",
+        "1 Escala balconera",
+        "1 Pileta de 5000 litros con forro",
+        "3 Manguerote de succión FR",
+        "1 Escobillón",
+        "2 Bichero",
+        "2 Pantalla",
+        "2 Batefuego",
+        "2 Guacha",
+        "1 McLeod",
+        "1 Rastrillo forestal",
+        "2 Pala",
+        "1 Taco para mangas"
+      ]
+    },
+    {
+      titulo: "Parte posterior del móvil",
+      items: [
+        "2 Carretel c/ 4 Manga de 70 FR c/u",
+        "1 Manguerín de alta presión",
+        "2 Manga de 70 FR para recarga",
+        "10 Cono"
+      ]
+    },
+    {
+      titulo: "Persiana 3 lado acompañante",
+      items: [
+        "1 Colchón de vacío",
+        "3 Machete",
+        "2 Pata de cabra",
+        "1 Cortaperno",
+        "1 Serrucho",
+        "1 Mazo",
+        "1 Mazo de goma",
+        "1 Hachita multifunción",
+        "1 Balde de arena o absorbente",
+        "1 Motor hidráulico",
+        "2 Bolsón de kit de altura"
+      ]
+    },
+    {
+      titulo: "Persiana 4 lado acompañante",
+      items: [
+        "1 Calce L chico",
+        "1 Caja de herramientas",
+        "1 Tabla espinal",
+        "1 Camilla Scoop",
+        "1 Hi-Lift con base",
+        "2 Brazo estabilizador c/ catraca",
+        "1 Patín de carga tipo tortuga",
+        "1 Basurero",
+        "4 Tacos escalonados",
+        "2 Cuñas",
+        "2 Extintor"
+      ]
+    },
+    {
+      titulo: "Caja de equipos autocontenidos",
+      items: [
+        "1 Sierra reciproca",
+        "3 Batería",
+        "6 Cuchilla para sierra reciproca",
+        "1 Pistola de impacto",
+        "1 Amoladora",
+        "2 Reflector"
+      ]
+    },
+    {
+      titulo: "Cajonera 3 lado acompañante",
+      items: [
+        "2 RAM",
+        "1 Cizalla",
+        "1 Combinada",
+        "1 Carpa",
+        "2 Manguerín de alta presión"
+      ]
+    },
+    {
+      titulo: "Cajonera 4 lado acompañante",
+      items: [
+        "10 Tacos cuadrados",
+        "10 Tacos planos",
+        "6 Cuñas"
+      ]
+    }
+  ];
+
+  // Establecer fecha actual por defecto
+  document.getElementById('fecha').valueAsDate = new Date();
+
+  // Renderizar secciones e ítems
+  const container = document.getElementById('checklist-container');
+  let itemGlobalIndex = 0;
+
+  seccionesChecklist.forEach((sec) => {
+    const card = document.createElement('div');
+    card.className = 'section-card';
+
+    const header = document.createElement('div');
+    header.className = 'section-header';
+    header.innerHTML = `<span>${sec.titulo}</span><span class="count">${sec.items.length} ítems</span>`;
+    card.appendChild(header);
+
+    const body = document.createElement('div');
+    sec.items.forEach((itemName) => {
+      const idx = itemGlobalIndex++;
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.dataset.seccion = sec.titulo;
+      row.dataset.nombre = itemName;
+
+      row.innerHTML = `
+        <div class="item-name">${itemName}</div>
+        <div class="radio-group">
+          <label><input type="radio" name="chk_${idx}" value="SI" required><span>SI</span></label>
+          <label><input type="radio" name="chk_${idx}" value="NO"><span>NO</span></label>
+          <label><input type="radio" name="chk_${idx}" value="N/A"><span>N/A</span></label>
+        </div>
+        <input type="text" class="estado-input" placeholder="Estado / Detalle...">
+      `;
+      body.appendChild(row);
+    });
+
+    card.appendChild(body);
+    container.appendChild(card);
+  });
+
+  // Función auxiliar para agilizar carga marcando todos como SI
+  function marcarTodosSi() {
+    document.querySelectorAll('input[type="radio"][value="SI"]').forEach(r => r.checked = true);
+  }
+
+  // Envío del formulario
+  document.getElementById('checklistForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (SCRIPT_URL === "TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI") {
+      alert("Error: Debes configurar la variable SCRIPT_URL con la URL de tu Google Apps Script.");
+      return;
+    }
+
+    const btn = document.getElementById('btnSubmit');
+    btn.disabled = true;
+    btn.textContent = "Guardando y enviando...";
+
+    const itemsData = [];
+    document.querySelectorAll('.item-row').forEach(row => {
+      const checkedRadio = row.querySelector('input[type="radio"]:checked');
+      const estadoVal = row.querySelector('.estado-input').value.trim();
+      itemsData.push({
+        seccion: row.dataset.seccion,
+        nombre: row.dataset.nombre,
+        valor: checkedRadio ? checkedRadio.value : "",
+        estado: estadoVal
+      });
+    });
+
+    const payload = {
+      guardia: document.getElementById('guardia').value,
+      encargado: document.getElementById('encargado').value.trim(),
+      fecha: document.getElementById('fecha').value,
+      observaciones: document.getElementById('observaciones').value.trim(),
+      items: itemsData
+    };
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors", // Evita bloqueos CORS con Google Apps Script
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      alert("¡Control registrado exitosamente en Google Sheets! Se envió el correo con los ítems marcados como NO.");
+      document.getElementById('checklistForm').reset();
+      document.getElementById('fecha').valueAsDate = new Date();
+    } catch (err) {
+      console.error(err);
+      alert("Ocurrió un error al enviar el formulario. Verifica tu conexión a internet.");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Guardar en Google Sheets y Enviar Reporte";
+    }
+  });
+</script>
+
+</body>
+</html>
