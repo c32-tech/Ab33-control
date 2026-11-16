@@ -261,7 +261,7 @@
 </div>
 
 <script>
-  // PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT IMPLEMENTADO
+  // PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT IMPLEMENTADO (termina en /exec)
   const SCRIPT_URL = "TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI";
 
   // Estructura exacta de la Hoja 2 del PDF: CONTROL DE MATERIAL MENOR
@@ -555,8 +555,8 @@
       return;
     }
 
-    if (SCRIPT_URL === "https://script.google.com/macros/s/AKfycbzc4POaZHhoX8HHcDm_BiuBp1R3WfvXot7sH22Xgx-me7Osvzm7BlG1gapJ1mfVpQkK/exec") {
-      alert("Error: Debes configurar la variable SCRIPT_URL con la URL de tu Google Apps Script.");
+    if (SCRIPT_URL === "https://script.google.com/macros/s/AKfycbyHFjoWGiu-h-ZzbPWAFZRvUY51eM5wovVCxnjjfGaoBAusQlKMi8sEAPK2vwikHhFe/exec" || !SCRIPT_URL.startsWith("https://script.google.com/")) {
+      alert("Error: Debes pegar la URL válida de tu Google Apps Script en la variable SCRIPT_URL.");
       return;
     }
 
@@ -585,19 +585,26 @@
     };
 
     try {
-      await fetch(SCRIPT_URL, {
+      // Se envía como text/plain para evitar bloqueos preflight CORS en Google Apps Script
+      // y permitir leer la respuesta real JSON del servidor
+      const response = await fetch(SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
       });
 
-      alert("¡Control registrado exitosamente en Google Sheets! Se envió el correo con los ítems marcados como NO.");
-      document.getElementById('checklistForm').reset();
-      document.getElementById('fecha').valueAsDate = new Date();
+      const result = await response.json();
+
+      if (result.status === "success") {
+        alert("¡Control registrado exitosamente en Google Sheets!" + (result.emailSent ? " Se envió el correo con las novedades." : ""));
+        document.getElementById('checklistForm').reset();
+        document.getElementById('fecha').valueAsDate = new Date();
+      } else {
+        alert("Error desde Google Sheets: " + (result.message || "Error desconocido"));
+      }
     } catch (err) {
       console.error(err);
-      alert("Ocurrió un error al enviar el formulario. Verifica tu conexión a internet.");
+      alert("No se pudo conectar con Google Apps Script. Verifica que la implementación tenga acceso para 'Cualquier usuario' y que la URL sea correcta.");
     } finally {
       btn.disabled = false;
       btn.textContent = "Guardar en Google Sheets y Enviar Reporte";
