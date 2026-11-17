@@ -59,7 +59,7 @@
       border-radius: 12px;
       border: 1px solid var(--border);
       box-shadow: 0 2px 8px rgba(14, 165, 233, 0.08);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
@@ -80,6 +80,27 @@
       box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
       background-color: #ffffff;
     }
+
+    /* Barra de acción rápida */
+    .quick-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+    }
+    .btn-fill-si {
+      background: var(--celeste-oscuro);
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(3, 105, 161, 0.2);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-fill-si:hover { background: var(--celeste-principal); }
+    .btn-fill-si:active { transform: scale(0.98); }
 
     /* Secciones del Checklist */
     .section-card {
@@ -242,6 +263,11 @@
       </div>
     </div>
 
+    <!-- Botón Marcar Todo SI -->
+    <div class="quick-bar">
+      <button type="button" class="btn-fill-si" onclick="marcarTodosSi()">Marcar todos como "SI"</button>
+    </div>
+
     <!-- Contenedor dinámico del Checklist -->
     <div id="checklist-container"></div>
 
@@ -261,7 +287,7 @@
 </div>
 
 <script>
-  // PEGA AQUÍ LA URL DE TU GOOGLE APPS SCRIPT IMPLEMENTADO (termina en /exec)
+  // URL de Google Apps Script configurada
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzjV5SI3tO7GEQvFZF57dwIKwAi8rNyiSfxon0cpAskLpGwxmwa7nm_pNVX_3dFck9J/exec";
 
   // Estructura exacta de la Hoja 2 del PDF: CONTROL DE MATERIAL MENOR
@@ -509,6 +535,12 @@
     container.appendChild(card);
   });
 
+  // Función para marcar todos los ítems como "SI"
+  function marcarTodosSi() {
+    document.querySelectorAll('input[type="radio"][value="SI"]').forEach(r => r.checked = true);
+    document.querySelectorAll('.item-row.row-error').forEach(row => row.classList.remove('row-error'));
+  }
+
   // Validación y envío del formulario
   document.getElementById('checklistForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -555,11 +587,6 @@
       return;
     }
 
-    if (SCRIPT_URL === "https://script.google.com/macros/s/AKfycbzjV5SI3tO7GEQvFZF57dwIKwAi8rNyiSfxon0cpAskLpGwxmwa7nm_pNVX_3dFck9J/exec" || !SCRIPT_URL.startsWith("https://script.google.com/")) {
-      alert("Error: Debes pegar la URL válida de tu Google Apps Script en la variable SCRIPT_URL.");
-      return;
-    }
-
     const btn = document.getElementById('btnSubmit');
     btn.disabled = true;
     btn.textContent = "Guardando y enviando...";
@@ -585,8 +612,6 @@
     };
 
     try {
-      // Se envía como text/plain para evitar bloqueos preflight CORS en Google Apps Script
-      // y permitir leer la respuesta real JSON del servidor
       const response = await fetch(SCRIPT_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
